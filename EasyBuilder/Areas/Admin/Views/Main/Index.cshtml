@@ -1,0 +1,89 @@
+﻿@{
+    ViewBag.Title = "EasyBuilder主页面";
+}
+
+@model List<EasyBuilder.Domain.Entities.Admin.Admin_Menu>
+
+@{
+    EasyLayout layout = new EasyLayout { fit = true};
+    EasyLayoutPanel panelnorth = new EasyLayoutPanel { region = "north",  border = false };
+    panelnorth.Append("<div class='panel-header' style='height:60px;border:none;padding:0px;'><div id='layout-logo'>EasyBuilder</div><div id='layout-functions'>");
+    EasyMenu menu = new EasyMenu { onClick = Function.Create("function(item){window.easybuilder.theme.change(item.text);}") };
+    EasyDom i1 = new EasyDom("div") { Text = "default" };
+    EasyDom i0 = new EasyDom("div") { Class = "menu-sep" };
+    EasyDom i2 = new EasyDom("div") { Text = "bootstrap" };
+    EasyDom i3 = new EasyDom("div") { Text = "gray" };
+    EasyDom i4 = new EasyDom("div") { Text = "metro" };
+    EasyDom i5 = new EasyDom("div") { Text = "black" };
+    menu.Append(i1).Append(i0).Append(i2).Append(i3).Append(i4).Append(i5);
+    EasyMenuButton menubtn = new EasyMenuButton { iconCls = "icon-drawings", Text = "切换主题", menu = menu.GetSelector() };
+    panelnorth.Append(menubtn).Append(menu).Append("</div></div>");
+
+    EasyLayoutPanel panelcenter = new EasyLayoutPanel { region = "center", border = false };
+    EasyTabs tabs = new EasyTabs { Id = "maintabs", fit = true };
+    List<EasyTools> ts = new List<EasyTools>();
+    ts.Add(new EasyTools { iconCls = "icon-home", handler = Function.Create(tabs.Do("select", 0)) });
+    ts.Add(new EasyTools { iconCls = "icon-reload", handler = Function.Create("function(){var tab = $('#maintabs').tabs('getSelected');tab.panel('refresh');}") });
+    ts.Add(new EasyTools { iconCls = "icon-busy", handler = Function.Create("function(){var tab = $('#maintabs').tabs('getSelected');var index=$('#maintabs').tabs('getTabIndex',tab);if(index==0)return;$('#maintabs').tabs('close',index);}") });
+    ts.Add(new EasyTools { iconCls = "icon-cancel", handler = Function.Create("function(){var tabs = $('#maintabs').tabs('tabs');var length=tabs.length;for(var i=length-1;i>0;i--){$('#maintabs').tabs('close',i);}}") });
+    tabs.tools = ts;
+    EasyTabPanel tp = new EasyTabPanel { title = "首页", iconCls = "icon-home", content = "欢迎进入EasyBuilder" };
+    tabs.Append(tp);
+    panelcenter.Append(tabs);
+    
+    EasyLayoutPanel panelwest = new EasyLayoutPanel { region = "west", title = "功能导航", width = 250, split = true };
+    EasyAccordion acd = new EasyAccordion { border = false, fit = true, animate = false };
+    foreach (var m in Model)
+    {
+        EasyAccordionPanel p = new EasyAccordionPanel { title = m.Name, iconCls = m.IconCls };
+        EasyTree tree = new EasyTree { url = "/Admin/Menu/GetSubMenus/" + m.Key, onClick = Function.Create("window.main.addTab") };
+        p.Append(tree);
+        acd.Append(p);
+    }
+    panelwest.Append(acd);
+    
+    EasyLayoutPanel panelsouth = new EasyLayoutPanel { region = "south",border=false };
+    panelsouth.Append("<div class='panel-header' style='font-family: Tahoma; border:none; height:20px; line-height:20px; text-align:center; '><span>COPYRIGHT © EasyBuilder ALL RIGHTS RESERVED</span></div>");
+    layout.Append(panelnorth).Append(panelcenter).Append(panelwest).Append(panelsouth);
+    
+    
+
+}
+
+@section scripts{
+    <style type="text/css" >
+        #layout-logo {
+            height: 60px;
+            line-height: 60px;
+            padding-left: 12px;
+            font-size: 20px;
+            font-weight: bold;
+            font-family: Tahoma;
+            float: left;
+        }
+        #layout-functions {
+            font-weight: bold;
+            float: right;
+            padding-top: 17px;
+            padding-right: 10px;
+        }
+        
+    </style>
+    <script type="text/javascript">
+        $(function () {
+            window.main = new Object();
+            window.main.addTab = function (node) {
+                if (node.attributes.url) {
+                    var maintabs = $('#maintabs');
+                    if (maintabs.tabs('exists', node.text))
+                        maintabs.tabs('select', node.text);
+                    else
+                        maintabs.tabs('add', { title: node.text, iconCls: node.iconCls, content: '<iframe width=\'100%\' height=\'100%\' frameborder=\'0\' src=' + node.attributes.url + '></iframe>', closable: true });
+                }
+            };
+
+        });
+    </script>
+}
+
+@Html.Build(layout)

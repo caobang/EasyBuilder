@@ -1,0 +1,66 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+@****************************************构建部分********************************************@
+
+@{
+    EasyTools t1 = new EasyTools { text = "tool1", iconCls = "icon-add", handler = Function.Create("window.tool.handler") };
+    List<EasyTools> tt = new List<EasyTools>();
+    tt.Add(t1);
+    EasyPanel ep = new EasyPanel { title = "panel1", width = 420, height = 300, collapsible = true, tools = tt, onExpand = Function.Create("window.panel.expand") };
+    ep.Append("Content");
+    EasyTabPanel etp = new EasyTabPanel { title = "tab1", closable = true };
+    EasyTabs tabs = new EasyTabs { width = 400, height = 200 };
+    ep.Append(tabs);
+    //tt.handler = Function.Create(tabs.Do("add", etp));
+
+    EasyAccordion a = new EasyAccordion { animate = true, fit=true,border=false };
+    EasyAccordionPanel p1 = new EasyAccordionPanel { title="a1",iconCls="icon-ok",content="2"};
+    EasyAccordionPanel p2 = new EasyAccordionPanel { title = "a2" };
+    EasyAccordionPanel p3 = new EasyAccordionPanel { title = "a3" };
+    a.Append(p1).Append(p2).Append(p3);
+    
+    EasyLayout layout = new EasyLayout { fit = true };
+    EasyLayoutPanel lp1 = new EasyLayoutPanel { region = "center", title = "Center" };
+    EasyLayoutPanel lp2 = new EasyLayoutPanel { region = "north", title = "North", content = "North..", split = true, height = 130, collapsible=false};
+    EasyLayoutPanel lp3 = new EasyLayoutPanel { region = "west", title = "West", width = 300, split = true };
+    lp3.Append(a);
+
+    EasyForm form = new EasyForm { Id="form", url="sass"};
+    EasyValidateBox box = new EasyValidateBox { Name = "sa", Value = "no" ,required=true};
+    EasyValidateBox box2 = new EasyValidateBox { Name = "sa2", Value = "no", required = true };
+    form.Append(box).Append("<br />").Append(box2);
+    lp1.Append(form);
+
+    EasyLinkButton b = new EasyLinkButton { Id = "btn1", Class = "sa", Text = "文本", iconCls = "icon-save", OnClick = Function.Eval("window.tool.handler()") };
+    lp1.Append(b);
+
+
+    layout.Append(lp1).Append(lp2).Append(lp3);
+    
+}
+
+
+@****************************************Scripts部分********************************************@
+
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            window.panel = new Object();
+            window.panel.expand = function () {
+                alert(1);
+            }
+            window.tool = new Object();
+            window.tool.handler = function () {
+                @EasyMessager.Progress(new { title = "s1", msg = "s2" });
+                window.setTimeout(function () {@EasyMessager.Progress("close") }, 500);
+                
+            }
+        });
+    </script>
+}
+
+@*****************************************html部分**********************************************@
+
+@Html.Build(ep)

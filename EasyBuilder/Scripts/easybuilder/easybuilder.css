@@ -1,0 +1,76 @@
+﻿body {
+}
+input[type="text"],input[type="password"]
+{
+    height:18px;
+    border:1px solid #B5B8C8;
+}
+
+
+.validatebox-invalid{
+    background-image: url('icon-images/bullet_error.png'); 
+}
+
+
+
+
+.icon-drawings{
+    background:url('icon-images/drawings.png') no-repeat center center;
+}
+.icon-settings {
+    background: url('icon-images/settings.png') no-repeat center center;
+}
+.icon-chartorganisation {
+    background: url('icon-images/chartorganisation.png') no-repeat center center;
+}
+.icon-database {
+    background: url('icon-images/database.png') no-repeat center center;
+}
+.icon-design {
+    background: url('icon-images/design.png') no-repeat center center;
+}
+.icon-sitemap {
+    background: url('icon-images/sitemap.png') no-repeat center center;
+}
+.icon-library_occupied {
+    background: url('icon-images/library_occupied.png') no-repeat center center;
+}
+.icon-customers {
+    background: url('icon-images/customers.png') no-repeat center center;
+}
+.icon-special {
+    background: url('icon-images/special.png') no-repeat center center;
+}
+.icon-suppliers {
+    background: url('icon-images/suppliers.png') no-repeat center center;
+}
+.icon-account {
+    background: url('icon-images/account.png') no-repeat center center;
+}
+.icon-user {
+    background: url('icon-images/user.png') no-repeat center center;
+}
+.icon-config {
+    background: url('icon-images/config.png') no-repeat center center;
+}
+.icon-report {
+    background: url('icon-images/report.png') no-repeat center center;
+}
+.icon-page {
+    background: url('icon-images/page.png') no-repeat center center;
+}
+.icon-home {
+    background: url('icon-images/home.png') no-repeat center center;
+}
+.icon-accept {
+    background: url('icon-images/accept.png') no-repeat center center;
+}
+.icon-reject {
+    background: url('icon-images/reject.png') no-repeat center center;
+}
+.icon-busy {
+    background: url('icon-images/busy.png') no-repeat center center;
+}
+.icon-pencil {
+    background: url('icon-images/big_pencil.png') no-repeat center center;
+}

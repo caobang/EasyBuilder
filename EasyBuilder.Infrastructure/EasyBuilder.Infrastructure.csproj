@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{505DB1BD-5406-464F-AFC9-1A208B5F7258}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>EasyBuilder.Infrastructure</RootNamespace>
+    <AssemblyName>EasyBuilder.Infrastructure</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.3.1.0\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Net4">
+      <HintPath>..\packages\AutoMapper.3.1.0\lib\net40\AutoMapper.Net4.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.30506.0\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ActionResults\ComboData.cs" />
+    <Compile Include="ActionResults\ControllerExtension.cs" />
+    <Compile Include="ActionResults\DataResult.cs" />
+    <Compile Include="ActionResults\GridData.cs" />
+    <Compile Include="ActionResults\MessageData.cs" />
+    <Compile Include="ActionResults\ToolBarData.cs" />
+    <Compile Include="ActionResults\TreeAttributes.cs" />
+    <Compile Include="ActionResults\TreeData.cs" />
+    <Compile Include="DataExtension\MapperExtension.cs" />
+    <Compile Include="DataExtension\MapperHelper.cs" />
+    <Compile Include="DataExtension\OrderMapperAttribute.cs" />
+    <Compile Include="StringParser\QueryParamParser.cs" />
+    <Compile Include="Exceptions\EasyBuilderException.cs" />
+    <Compile Include="ObjectContainerAttributes\ResolvePropertyAttribute.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SysConfig\DefaultConfig.cs" />
+    <Compile Include="VerifyCode\ImageVerifyCode\ImageVerifyCode.cs" />
+    <Compile Include="VerifyCode\ImageVerifyCode\ImageVerifyCodeParameter.cs" />
+    <Compile Include="VerifyCode\ImageVerifyCode\ImageVerifyCodeProvider.cs" />
+    <Compile Include="VerifyCode\ImageVerifyCode\TextImageBuilder.cs" />
+    <Compile Include="VerifyCode\RandomTextBuilder.cs" />
+    <Compile Include="VerifyCode\TextType.cs" />
+    <Compile Include="VerifyCode\VerifyCode.cs" />
+    <Compile Include="VerifyCode\VerifyCodeBuilder.cs" />
+    <Compile Include="VerifyCode\VerifyCodeParameter.cs" />
+    <Compile Include="VerifyCode\VerifyCodeProvider.cs" />
+    <Compile Include="VerifyCode\VerifyCodeType.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EasyBuilder.Core\EasyBuilder.Core.csproj">
+      <Project>{b8b152aa-5220-4852-8044-97ff5ed9afe1}</Project>
+      <Name>EasyBuilder.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="VerifyCode\EmailVerifyCode\" />
+    <Folder Include="VerifyCode\MobileMessageVerifyCode\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

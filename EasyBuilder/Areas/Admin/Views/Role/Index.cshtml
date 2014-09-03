@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+@{
+    List<EasyDataGridColumn> cols = new List<EasyDataGridColumn>();
+    cols.Add(new EasyDataGridColumn { title = "名称", field = "Name", sortable=true,width = 150, align = "center" });
+    cols.Add(new EasyDataGridColumn { title = "排序", field = "IntSort", sortable=true,width = 80, align = "center" });
+    List<EasyTools> ts = new List<EasyTools>();
+    ts.Add(new EasyTools { iconCls = "icon-add", text = "添加", handler = Function.Create("function(){alert(1)}") });
+    ts.Add(new EasyTools { iconCls = "icon-pencil", text = "编辑" });
+    ts.Add(new EasyTools { iconCls = "icon-busy", text = "删除" });
+    ts.Add(new EasyTools { iconCls = "icon-search", text = "查询" });
+
+    EasyDom tools = new EasyDom("div") { Style = "height:26px;" };
+    tools.Append(new EasyLinkButton { iconCls = "icon-add", Text = "添加", plain = true });
+    tools.Append(new EasyLinkButton { iconCls = "icon-pencil", Text = "编辑", plain = true });
+    tools.Append(new EasyLinkButton { iconCls = "icon-busy", Text = "删除", plain = true });
+    EasyDom t1 = new EasyDom("div") { Style = "float:right;padding:2px;" };
+    EasyMenu m1 = new EasyMenu { };
+    m1.Append(new EasyDom("div") { Text = "名称", Name = "name" }).Append(new EasyDom("div") { Text = "内容", Name = "content" });
+    EasySearchBox search = new EasySearchBox { menu = m1.GetSelector(), prompt = "请输入内容进行查询", };
+    t1.Append(search);
+    tools.Append(t1).Append(m1);
+    EasyDataGrid dt = new EasyDataGrid { title = "组织机构 > 角色管理", fit = true, border = false, idField = "Key", queryParams = new { search = Function.Create("function(){var name=" + search.Do("getName") + "var value=" + search.Do("getValue") + "return name+':'+value}") }, sortName = "IntSort", url = "/Admin/Role/GetPagingRole", pagination = true, columns = cols, rownumbers = true, singleSelect = true, toolbar = tools.GetSelector() };
+    search.searcher = Function.Create("function(v,n){" + dt.Do("load") + "}");
+}
+
+@section scripts{
+
+    
+}
+@Html.Build(dt)
+@Html.Build(tools)

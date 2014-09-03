@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "EasyBuilder管理端登录";
+}
+
+@{
+    EasyForm form = new EasyForm { Style = "padding-top:15px;", attrData = new { method = "post" } };
+    EasyValidateBox input1 = new EasyValidateBox { required = true, missingMessage = "请输入用户名", Style = "width:150px", Name = "username", attrData = new { type = "text" } };
+    EasyValidateBox input2 = new EasyValidateBox { required = true, missingMessage = "请输入密码", Style = "width:150px", Name = "password", attrData = new { type = "password" } };
+    EasyValidateBox input3 = new EasyValidateBox { required = true, missingMessage = "请输入验证码", Style = "width:75px;vertical-align:middle;", Name = "verifycode", attrData = new { type = "text" } };
+    form.Fill(2, "用户名：", input1, "密码：", input2, "验证码", "<img alt='验证码' src='/Admin/Login/GetVerifyCode' style='width: 70px;height: 20px;border:1px solid #cccccc;cursor: pointer;vertical-align:middle;' onclick='javascript:var v = Math.random();this.src=\"/Admin/Login/GetVerifyCode?&v=\"+v' />&nbsp;" + input3.Html());
+    EasyLinkButton btn1 = new EasyLinkButton { Text = "登录", iconCls = "icon-ok", OnClick = Function.Eval(form.Do("submit", new { url = "/Admin/Login/Login", onSubmit = Function.Create(EasyMessager.Progress(new { title = "操作提醒", msg = "正在登录" })), success = Function.Create("window.login.success") })) };
+    EasyLinkButton btn2 = new EasyLinkButton { Text = "重置", iconCls = "icon-cancel", OnClick = Function.Eval(form.Do("clear")) };
+    form.Append("<div style='text-align:center;padding-top:5px;'>").Append(btn1).Append(" ").Append(btn2).Append("</div>");
+    EasyDialog dialog = new EasyDialog { title = "EasyBuilder 管理端登录", width = 300, height = 180, closable = false, draggable = false };
+    dialog.Append(form);
+    
+}
+
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            window.login = new Object;
+            window.login.success = function (data) {
+                @EasyMessager.Progress("close")
+                var data = eval('(' + data + ')');
+                if (data) {
+                    if (data.result) {
+                        window.location.href = "/Admin/Main";
+                    }
+                    else {
+                        $.messager.show({ title: "操作提醒", msg: data.message });
+                    }
+                }
+            }
+
+        });
+    </script>
+}
+
+@Html.Build(dialog)
